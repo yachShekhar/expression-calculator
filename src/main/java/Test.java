@@ -14,13 +14,13 @@ public class Test {
         data.put("c", BigDecimal.valueOf(12));
         data.put("d", BigDecimal.valueOf(14));
         data.put("e", BigDecimal.valueOf(6));
-//        System.out.println("a * ( b + c ) / d  ==>"+ExpressionParser.init("a * ( b + c ) / d").evaluate(data).getData());
-//
-//
-//        System.out.println("a * ( b + c )   ==>"+ExpressionParser.init("a * ( b + c)").evaluate(data).getData());
-//
-//
-//        System.out.println("a +  b  * e  ==>"+ExpressionParser.init("a +  b  * e").evaluate(data).getData());
+        System.out.println("a * ( b + c ) / d  ==>"+ExpressionParser.init("a * ( b + c ) / d").evaluate(data).getData());
+
+
+        System.out.println("a * ( b + c )   ==>"+ExpressionParser.init("a * ( b + c)").evaluate(data).getData());
+
+
+        System.out.println("a +  b  * e  ==>"+ExpressionParser.init("a +  b  * e").evaluate(data).getData());
 
 
         System.out.println("(c - b) * 100.1  ==>"+ExpressionParser.init("(c -  b) * 100.1").evaluate(data).getData());
