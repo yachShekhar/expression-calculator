@@ -6,7 +6,8 @@ For more details you can refer to Test.java file.
 Note: you can try out any complex formula.
 
 
-Sample code
+Sample code:
+
         Map<String, BigDecimal> data = new HashMap<>();
         data.put("a", BigDecimal.valueOf(100));
         data.put("b", BigDecimal.valueOf(2));
@@ -23,3 +24,12 @@ Sample code
 
 
         System.out.println("(c - b) * 100.1  ==>"+ExpressionParser.init("(c -  b) * 100.1").evaluate(data).getData());
+       
+       
+       
+Output:
+
+        a * ( b + c ) / d  ==>100
+        a * ( b + c )   ==>1400
+        a +  b  * e  ==>112
+        (c - b) * 100.1  ==>1001.0
