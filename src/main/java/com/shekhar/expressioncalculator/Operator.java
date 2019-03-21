@@ -3,46 +3,48 @@ package com.shekhar.expressioncalculator;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Operator {
-    NULL(null),
+//TODO support modulus and power
+enum Operator implements Operable{
+    LITERAL("\"[0-9a-zA-z\\\\.]+\""){
+        @Override
+        public Expression create(Expression left, Expression right) {
+            return null;
+        }
+    },
+    ADD("+"){
+        @Override
+        public Expression create(Expression left, Expression right) {
+            return new Addition(left, this, right);
+        }
+    },
 
-    LITERAL(""),
+    SUBTRACT("-"){
+        @Override
+        public Expression create(Expression left, Expression right) {
+            return new Subtraction(left, this, right);
+        }
+    },
 
-    NOT("!"),
+    MULTIPLY("*"){
+        @Override
+        public Expression create(Expression left, Expression right) {
+            return new Multiplication(left, this, right);
+        }
+    },
 
-    OPEN_BRACKET("("),
+    DIVIDE("/"){
+        @Override
+        public Expression create(Expression left, Expression right) {
+            return new Division(left, this, right);
+        }
+    },
 
-    CLOSE_BRACKET(")"),
-
-    AND("&&"),
-
-    OR("||"),
-
-    ADD("+"),
-
-    SUBTRACT("-"),
-
-    MULTIPLY("*"),
-
-    DIVIDE("/"),
-
-    ASSIGN("="),
-
-    LESS_THAN("<"),
-
-    LESS_THAN_OR_EQUALS("<="),
-
-    EQUALS("=="),
-
-    NOT_EQUALS("!="),
-
-    GREATER_THAN(">"),
-
-    GREATER_THAN_OR_EQUALS(">="),
-
-    POWER ("^"),
-
-    MODULUS ("%");
+    ASSIGN("="){
+        @Override
+        public Expression create(Expression left, Expression right) {
+            return new Assignment(left, this, right);
+        }
+    };
 
 
     private final String value;
@@ -54,12 +56,6 @@ enum Operator {
 
 
     public String getValue() {
-        if (this.equals(Operator.NULL)) {
-            return "[null]";
-        }
-        if (this.equals(Operator.LITERAL)) {
-            return "[literal]";
-        }
         return this.value;
     }
 
@@ -67,23 +63,13 @@ enum Operator {
     private static final Map<String, Operator> backRef = new HashMap<>();
 
     public static Operator of(String word) {
-        if (word == null) {
-            return Operator.NULL;
-        }
         if (backRef.isEmpty()) {
-            for (int w = 0;
-                 w< Operator.values().length;
-                 w++) {
+            for (int w = 0; w< Operator.values().length; w++) {
                 Operator type = Operator.values()[w];
-                if (type != Operator.NULL) {
-                    backRef.put (type.value ,type);
-                }
+                backRef.put(type.getValue(), type);
             }
         }
-        Operator type = backRef.get(word);
-        if (type == null) {
-            return Operator.LITERAL;
-        }
-        return type;
+        return backRef.get(word);
     }
+
 }

@@ -1,6 +1,5 @@
 package com.shekhar.expressioncalculator;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 class Addition extends Expression {
@@ -9,7 +8,7 @@ class Addition extends Expression {
     }
 
     @Override
-    void setData(Map<String, BigDecimal> data) {
+    void setData(Map<String, Object> data) {
         this.data = left.data.add(right.data);
     }
 }

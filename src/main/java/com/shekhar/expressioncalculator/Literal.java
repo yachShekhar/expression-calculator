@@ -9,11 +9,18 @@ class Literal extends Expression {
     }
 
     @Override
-    void setData(Map<String, BigDecimal> data) {
+    void setData(Map<String, Object> data) {
         BigDecimal rawKey = number(this.key);
-        this.data = rawKey == null ? data.get(key) : rawKey;
+        this.data = rawKey == null ? newBigDecimal(data.get(key)) : rawKey;
     }
 
+    private BigDecimal newBigDecimal(Object data){
+        try {
+            return data == null ? BigDecimal.ZERO : new BigDecimal(data.toString());
+        } catch(NumberFormatException e){
+            return BigDecimal.ZERO;
+        }
+    }
 
     private BigDecimal number(String str) {
         try {

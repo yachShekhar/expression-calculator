@@ -21,18 +21,18 @@ public abstract class Expression {
         this.right = right;
     }
 
-    abstract void setData(Map<String, BigDecimal> data);
+    abstract void setData(Map<String, Object> data);
 
     public BigDecimal getData(){
         return data;
     }
 
-    public Expression evaluate(Map<String, BigDecimal> data){
+    public Expression evaluate(Map<String, Object> data){
         evaluate(this, data);
         return this;
     }
 
-    private void evaluate(Expression expression, Map<String, BigDecimal> data){
+    private void evaluate(Expression expression, Map<String, Object> data){
         if(expression.left != null){
             evaluate(expression.left, data);
         }

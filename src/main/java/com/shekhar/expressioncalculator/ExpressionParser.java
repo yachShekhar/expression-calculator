@@ -44,7 +44,7 @@ public class ExpressionParser {
                 ops.pop();
             }
 
-            else if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/'){
+            else if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/' || tokens[i] == '='){
                 while (!ops.empty() && hasPrecedence(tokens[i], ops.peek()))
                     values.push(applyOperator(ops.pop(), values.pop(), values.pop()));
                 ops.push(tokens[i]);
@@ -65,17 +65,7 @@ public class ExpressionParser {
      * @return
      */
     private Expression applyOperator(char ops, Expression right, Expression left){
-        switch (ops){
-            case '+':
-                return new Addition(left, Operator.of(String.valueOf(ops)), right);
-            case '-':
-                return new Subtraction(left, Operator.of(String.valueOf(ops)), right);
-            case '*':
-                return new Multiplication(left, Operator.of(String.valueOf(ops)), right);
-            case '/':
-                return new Division(left, Operator.of(String.valueOf(ops)), right);
-        }
-        return null;
+        return Operator.of(String.valueOf(ops)).create(left, right);
     }
 
     /**
@@ -85,6 +75,8 @@ public class ExpressionParser {
      * @return
      */
     private boolean hasPrecedence(char op1, char op2) {
+        if (op2 == '=')
+            return false;
         if (op2 == '(' || op2 == ')')
             return false;
         if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-'))
